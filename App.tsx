@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Login from './components/login';
 import Main from './components/main-page';
 
 export default function App() {
@@ -7,6 +8,7 @@ export default function App() {
     setVisible(true)
   }
   return (
-     <Main/>
+     <Login/>
+    //  <Main/>
   );
 }
