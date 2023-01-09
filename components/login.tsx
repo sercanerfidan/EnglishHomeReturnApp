@@ -9,12 +9,16 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import DropDownPicker from "react-native-dropdown-picker";
 import { isUserPermittedLogin } from "../services/login-service";
 import Main from "./main-page";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { User } from "../model/user";
 import Admin from "./admin";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function Login() {
   const [visible, setVisible] = useState(false);
@@ -25,6 +29,13 @@ export default function Login() {
   const [selectedUserType, setSelectedUserType] = useState("admin");
   const [isStoragePersonal, setStoragePersonal] = useState(false);
   const [userInfo, setUserInfo] = useState({} as User);
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "Admin", value: "admin" },
+    { label: "Personel", value: "personel" },
+  ]);
 
   const setVisibility = () => {
     setVisible(true);
@@ -82,23 +93,44 @@ export default function Login() {
         <>
           <View
             style={{
-              width: 200,
-              height: 80,
               backgroundColor: "white",
               justifyContent: "center",
+              maxHeight: hp("20%"),
+              bottom: hp("3%"),
+              flex: 1,
             }}
           >
+            {/* <View style={{ flex: 0.3 }}> */}
             <Text
-              style={{ fontSize: 35, top: 20, marginLeft: 10, color: "black" }}
+              style={{
+                fontSize: 35,
+                top: 20,
+                marginLeft: 10,
+                color: "black",
+              }}
             >
               Sign In
             </Text>
+            {/* </View> */}
+            {/* 
+            <View style={{ backgroundColor: "blue", flex: 0.7 }}>
+              <Text
+                style={{
+                  fontSize: 35,
+                  maxHeight: 40,
+                  top: 20,
+                  marginLeft: 10,
+                  color: "black",
+                }}
+              >
+                Test
+              </Text>
+            </View> */}
           </View>
 
           <View
             style={{
-              height: 100,
-              top: 60,
+              height: hp("15%"),
               backgroundColor: "white",
               justifyContent: "center",
             }}
@@ -121,8 +153,7 @@ export default function Login() {
           </View>
           <View
             style={{
-              height: 100,
-              top: 60,
+              height: hp("15%"),
               backgroundColor: "white",
               justifyContent: "center",
             }}
@@ -146,79 +177,102 @@ export default function Login() {
           </View>
           <View
             style={{
-              height: 60,
+              height: hp("30%"),
               marginLeft: 20,
               marginRight: 20,
-              top: 60,
               backgroundColor: "white",
               justifyContent: "center",
             }}
           >
-            <Picker
+            <DropDownPicker
+              open={open}
+              onSelectItem={(args: any) => setSelectedUserType(args.value)}
+              value={selectedUserType}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+            />
+
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 1,
+                height: hp("20%"),
+                top: hp("3%"),
+                marginLeft: wp("-2%"),
+                marginRight: 20,
+                backgroundColor: "white",
+                justifyContent: "center",
+              }}
+            >
+              <View style={{ flex: 0.1 }}>
+                <BouncyCheckbox
+                  onPress={(isChecked: boolean) => {
+                    setStoragePersonal(isChecked);
+                  }}
+                  style={{ top: hp("-0.2%") }}
+                />
+              </View>
+              <View style={{ flex: 0.8 }}>
+                <Text style={styles.label}>Depo Personeli</Text>
+              </View>
+            </View>
+
+            <View
+              style={{
+                height: hp("10%"),
+                marginLeft: 5,
+                marginRight: 5,
+                backgroundColor: "white",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                style={{ marginLeft: 10, height: 120, top: hp("10%") }}
+                title="Sign In"
+                color={"blue"}
+                onPress={onButtonClick}
+              ></Button>
+            </View>
+            <View
+              style={{
+                height: hp("5%"),
+                width: 200,
+                marginLeft: 20,
+                backgroundColor: "white",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{ color: "blue" }}
+                onPress={() => Linking.openURL("http://google.com")}
+              >
+                Forgot Password?
+              </Text>
+            </View>
+            {/* <Picker
               selectedValue={selectedUserType}
-              style={{ backgroundColor: "#CDF4F6" }}
+              style={{ backgroundColor: "#CDF4F6", maxHeight: hp("10%") }}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedUserType(itemValue)
               }
             >
               <Picker.Item label="Admin" value="admin" />
               <Picker.Item label="Personel" value="personel" />
-            </Picker>
+            </Picker> */}
           </View>
-          <View
+          {/* <View
             style={{
-              height: 60,
+              height: hp("10%"),
               marginLeft: 20,
               marginRight: 20,
-              top: 70,
               backgroundColor: "white",
               justifyContent: "flex-start",
               flexDirection: "row",
             }}
           >
-            <BouncyCheckbox
-              onPress={(isChecked: boolean) => {
-                setStoragePersonal(isChecked);
-              }}
-              style={{ top: -16 }}
-            />
-
-            <Text style={styles.label}>Depo Personeli</Text>
-          </View>
-          <View
-            style={{
-              height: 80,
-              marginLeft: 20,
-              marginRight: 20,
-              top: 60,
-              backgroundColor: "white",
-              justifyContent: "center",
-            }}
-          >
-            <Button
-              style={{ top: 100, marginLeft: 10, height: 120 }}
-              title="Sign In"
-              color={"blue"}
-              onPress={onButtonClick}
-            ></Button>
-          </View>
-          <View
-            style={{
-              height: 50,
-              width: 200,
-              marginLeft: 20,
-              top: 40,
-              backgroundColor: "white",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{ color: "blue" }}
-              onPress={() => Linking.openURL("http://google.com")}
-            >
-              Forgot Password?
-            </Text>
-          </View>
+          </View> */}
         </>
       )}
       {isPermittedLogin && selectedUserType !== "admin" && (
