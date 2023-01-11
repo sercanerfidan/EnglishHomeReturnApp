@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import Product from "./product";
 
 export default function Main(props: any) {
   const [visible, setVisible] = useState(false);
@@ -342,6 +343,15 @@ export default function Main(props: any) {
               />
             </View>
           )}
+          <View
+            style={{
+              marginTop: hp("20%"),
+              marginLeft: wp("10%"),
+              marginRight: wp("10%"),
+            }}
+          >
+            {/* <Product /> */}
+          </View>
 
           <View
             style={{

@@ -24,9 +24,9 @@ export default function Login() {
   const [visible, setVisible] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [isPermittedLogin, setLoginPermissionStatus] = useState(false);
+  const [isPermittedLogin, setLoginPermissionStatus] = useState(true);
   const [isShowErrorMessage, setErrorMessageStatus] = useState(false);
-  const [selectedUserType, setSelectedUserType] = useState("admin");
+  const [selectedUserType, setSelectedUserType] = useState("asd");
   const [isStoragePersonal, setStoragePersonal] = useState(false);
   const [userInfo, setUserInfo] = useState({} as User);
 
